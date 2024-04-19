@@ -1,0 +1,268 @@
+https://github.com/josephnhtam/vsp-youtube-clone-microservices#running-with-docker
+
+Video Hub Learning 
+Domain Driven Architecture.
+Learnings: 
+we start with Building Blocks. 
+Domain. 
+Event 
+
+Libraries":
+MediatorR 
+When event we start domain driven architecture we start with events. 
+Fist we have defined IDomainEvent it is inherited from INotification here we have use MediatR.
+IDomainEventEmitter this interface is to identify domain events emiter while get domain events from context changes.
+IDomainEventHandler Dispatching Domain event. 
+IDomainEventAccessor Get Domain event from context and remove then. 
+
+Entity class it is abstract class. use to identify entity. 
+
+IAggregateRoot used to identify Aggregate . 
+
+IgnoreMemberAttribute it is used to identify property or field that we want to ignore in comparison. 
+
+ValueObject abstract class is has == operator overloaded with properties comparison. we have to identify value objects and entities from requirements. 
+
+DomainEntity Main entity of domain driven design. where we have business logic places in domain entity Reflects our problem domain. In domian entity we have rules 
+and events. 
+
+Rules: IBusinessRule Just to identity it is buniness rule. and we have method to check rule is valid and invalid message. 
+CharactersRule: 
+Domain Has its own rules independent of outlayers. like we have rules in client layer about model validation but here in domain drivven domain layer has its own rules.
+
+we use Regix class to compare regix 
+
+we can use delegates to make generic code like we can get Func of Task  Action of Some type to provide flexibility to set properties before using method and we call that delegate in our method.
+
+After creating Domain building block we can start work on Services. 
+
+We Can not start Services from Domain Layer. 
+
+We Start With Events then Rules then value objects and Domain Entity. side by side exceptionss. 
+
+we place our entities value objects entities and Aggregates in single folder Models
+
+Things that are common in layers we put them in building blocks and things that are common in building blocks we put them in SharedKernel
+
+Domain Layer we start from creating Models 
+
+Identification of Models type depends on thinking and Requirements. 
+If Identifies Object have Lifecycle and has unique Identity then it is Entity other wise it is Value Object.
+
+Aggregate is Group of Accociated objects and AggregateRoot is entity that controll access and operations of other entities in that aggregate. like we have order it is aggregateroot. it controll access of order items 
+if object is identified from its properties. then it is value object.
+
+In Value Objects we have Private constructor and publis static method create. 
+Enums are better for handeling state Yes we can use description attribute on enums 
+
+Domain Entities and Value objects has there own design in db we modeled them seprately. 
+
+In Domain Entities we have private constructor and privide set properties. 
+
+we have seperate private list and public Readonly get property. 
+
+for evry busines logic we first check rules and then we check if method is already executed or not our methods should be Idemponent. then we set properties and update version. 
+on completion we add domain event related to that action. 
+
+We are using DataTimeOffset for handling date 
+we have private fields on top 
+then public properties. 
+we can have properties that are calculated from other properties.
+we can have multiple columns for currencyToken. 
+
+In Service Domain we have rules against properties.  
+While implementing business logic we first check if state is valid. then we check for Idempotency. then we apply rules. then we update properties. and perform business logic. add domain event.
+We maintain domain events list and dispatch domain event when we commit changes. 
+
+We segregate operations in multiple methods so that we can have multiple methods.
+
+We gave generic method for setting visibility and then we have wrappers for setting particular type of visibility.
+
+In case of status we must check if that status is already set or not. 
+We have learn here why value objects override equality operator. and if we need to compare two array we use sequence equal. 
+
+In All Domain logics we have some thing to Identify Idempotency of operation. some time we compare properties if properties are small some time we use version property and some time we use data. 
+
+As application only depends on domain to database related contract are in domain 
+so in domain we have repositories contracts.
+we have catgorize sort options as Specifications 
+
+Now Moving towards Infrastructure Layer.
+Packages required for Infrastructure 
+Microsoft.EntityFrameworkCore.Design.
+
+Domain models and entity configurations are differenct. in domain value objects does not have Id but in entity framework we have Id. so we design models according to domain driven principles and 
+configure then in entity type configuration accourding to entity framework. 
+
+We have two different data sources so we have generic building block infrastructure for common items of both datasources and seperate projects of core and mongo for concrete common items. 
+
+we have Infrastructure.EFCore. and we are adding packages.
+EntityFrameworkCore.Relational
+OpenTelemetery 
+
+If we need to create seperate table of value object we can add id in entity type configuration and use it as value object in our aggregate.
+
+We can ignore properties that are related to ddd not table. 
+We can have multiple currency tokens in single table. 
+
+We have private list variable and public readonly list properties. 
+we use builder metadata findnavigation to get navigation and set its field. 
+then we use public property to define relation. 
+
+we can own entity to make it complex type. and not want to create seperate table.
+
+we sepecify data is required or not. 
+
+In OnModelCreating we specify assembly of all configurations 
+
+We can add interceptors to modify query created by entity framework and we can add then in onConfiguring. 
+
+We can add tables from common place we can write extention of ModelBuilder and add tables using it in common place if we need them in multiple services. 
+
+if found type by simple way of gettype then its fine if not then we use assembly hint and trying to find type. if not then we we find type in all assemblies. 
+
+When we have to serialize and deserialize we need type from string value here we need to find type with assemblies. that why we have designed TypeCache utility. 
+
+DbContext Name is service name and dbcontext. 
+if we have scnerio where we have to add same tables in multiple services. then we can write extention methods to capture that requirements we can write extention of ModelBuilder and add configuratioon
+of required entities.
+
+Here we are adding table to maintain Idempotency of operations. 
+
+We have place Idempotent operatioon in infrastructure and TransactionalEvent in domain 
+
+we have context and extention of modelbuilder for both transaction and Idempotent Operation. 
+
+Entity Framework provide us flexibility to intercept sql command generated for particular operation. 
+
+We can inherit from DbCommandInterceptor and implement both async and sync methods.
+reader executing or async.
+
+After creating interceptor we add in onconfiguring in dbcontext. 
+
+Now we have moved towards 
+
+Now we are moving towards Web API project. 
+
+So first we move towards Application building block. 
+
+Packages 
+MediatorR FluentValidation. 
+
+We start application from defining contracts 
+where we segregate MediatR IRequest in to IQuery and ICommand and IAppRequest. add interface for handlers. 
+
+We have create seperate interfaces for command queries and handlers.
+
+We now moving towards Applicaiton. 
+Packages that we are using. 
+FulentValidation.DependencyInjectionExtensions 
+MediatorR.Extentions.Microsoft.DependencyInjection
+
+Project References that we required. 
+VidoeManagerDomain.
+Applcation.
+Videomanagerinfrastructure. 
+
+command Handlers logic. first we check video is available. if not throw error. 
+we have check if logic is already performed or not. 
+we are trying to make handlers methods idempotent. 
+then we perform logic and save changes.
+
+We dont creat Dtos we have required properties on commands and some time we use Models in commands properties.
+we use primary version to handle idempotency and we have check in model method. 
+
+Here we have exception identifiers that we use to identify exception and apply solution or create message. 
+
+We have Dto that takes input from controller 
+Then we have commands they have there own properties. we can use domain models in command and use can created comment to segregate data of command. 
+
+EventBus
+Project and Package References for Event Bus
+Shared kernal 
+Microsoft.AspNetCore.Hosting.Abstractions 
+
+We have Interface for IEventBuss. it is responsible for publishing Integration Events and providing type of integration event properties.
+
+So story is that when we have large number of request and how want to controll processing so that system should not hanged we use semaphore and timer to controll execution. 
+we have RateLimitedRequestProcessor that control execution. 
+
+Purpose of usiing ConfigureAwait(false) is that continuaiton after the await does not have to be run on caller context. if current context is not required we can use it for database calls and http calls from web api. 
+
+A new way to registering dependency with factory method where we can specify dependenties of object. 
+
+we can lock list by adding it in lock block we should take care of currency while working on events. 
+
+we can get entities from context change tracker and we can get context in any service and add values to context. 
+
+When we have files common in some services not in all we add then in Service.Shared project. 
+
+
+IntegrationEvent that contain data that integration and event properties pass to outbox message then that outbox message pass to transactional event and saved in data base. 
+Its very important to have solid exception throwing and Handling mechanism. 
+
+We must check rules and idenpotency on both domian entities and commands. 
+
+We must follow single responsibility principle we remove dublicate code and some time use power of generics and extention methods to move code in centerlized place. 
+
+we create validators of sub commands and 
+In commands have there own properties and they use domain models in them and we also have DtoModels that takes input and passed to commands. 
+We have DtoModels in application. 
+We have learned a new method Math.Clamp 
+
+Name of Paginated request GetVideosRequestDto
+Dto that are in request named as requst dto that are in response named as response dto and other as Dtos. 
+We can have multiple dtos on same file if they are not used in other places Mean we have parent child dtos we can in single file.
+
+We have use Automapper for mappings. we are firstly doing mappings in domain event handler. 
+we have handlers in application layer. 
+we have IntegrationEvents in Application layer.
+
+Domain Events Handling comes in Applicaiton layer. 
+We have use notify sufix in integration event and domain event in Domain events. 
+In Integration event we have define there own properties and some time use dtos and for that we have use auto mapper to map domain models to dtos.
+
+New Topic to learn: 
+Routing Slip in Event Buss. 
+Routing Slip Patteren. 
+
+Problem. 
+we have event on which we have to perform sequence of tasks and we have to make sure all tasks performed successfully or we role back changes. 
+
+Routing Slip is container that contains sequence of Processing Steps. along with request data. we have named it Checkpoints. 
+
+Checkpoints ordered sequence  of processing steps. 
+CheckpointsLogs logs of each step. 
+RollbackDestination. Where to go in case of error. 
+Blackboard additional infor for checkpoints. 
+
+Routing Slip is flexible and adaptable method to handle processing of multiple taks in differenct services. 
+
+Working on RoutingSlip: 
+
+In Routing slip we have events, checkpoints and checkpoints logs rolback mechanism he. 
+
+Checkpoints 
+  Name Destination properties data. 
+ 
+incomingINtegrationevent properties 
+incomingINtegrationevent context. 
+
+ProceedContext he current event. hook for complete. roleback or terminate. 
+IRoutingSlipBuilder. 
+RoutingSlip. 
+  List of checkpoints checkpointslogs rolback destination blackboard data that transfer along with. 
+  
+  RoutingSlipCheckPoint. Name, Destination Properties. 
+  RoutingSlipCheckpointLog. Name Event type date success message. 
+  
+  IntegrationEventQueue. 
+  
+ I have to Identify used elements used in transaction outbox 
+  
+  We have add entity using extention method but not in db set properties. then we can use this entity using dbcontext.set method. 
+  
+  SqlException is Child class of dbexception and it has sqlstate property that contains error code for diffference reason.
+  
+
+
