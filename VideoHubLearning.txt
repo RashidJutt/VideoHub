@@ -10,11 +10,12 @@ Event
 Libraries":
 MediatorR 
 When event we start domain driven architecture we start with events. 
+IDomainEvent it is MediatorR Notification. 
 Fist we have defined IDomainEvent it is inherited from INotification here we have use MediatR.
-IDomainEventEmitter this interface is to identify domain events emiter while get domain events from context changes.
+IDomainEventEmitter this interface is to identify domain events emiter while get domain events from context changes. DomainEntity implement this interface 
 IDomainEventHandler Dispatching Domain event. 
 IDomainEventAccessor Get Domain event from context and remove then. 
-
+IDomainEventDispatcher
 Entity class it is abstract class. use to identify entity. 
 
 IAggregateRoot used to identify Aggregate . 
@@ -140,6 +141,19 @@ reader executing or async.
 
 After creating interceptor we add in onconfiguring in dbcontext. 
 
+We have put Interfaces and objects of Idempotency.  
+Idempotent Operation 
+Idempotent Context. 
+
+Transactional Event 
+We move extentions of services to Infrastructure. We have a service that we want to register in multiple services we can write extention method in infrastructure 
+layer that add service to servicecollection. 
+
+
+
+
+
+
 Now we have moved towards 
 
 Now we are moving towards Web API project. 
@@ -264,5 +278,6 @@ RoutingSlip.
   
   SqlException is Child class of dbexception and it has sqlstate property that contains error code for diffference reason.
   
+  I new revising it. 
 
 
