@@ -125,12 +125,50 @@ if found type by simple way of gettype then its fine if not then we use assembly
 When we have to serialize and deserialize we need type from string value here we need to find type with assemblies. that why we have designed TypeCache utility. 
 
 DbContext Name is service name and dbcontext. 
+
+Transaction Events:
+ 
 if we have scnerio where we have to add same tables in multiple services. then we can write extention methods to capture that requirements we can write extention of ModelBuilder and add configuratioon
 of required entities.
+ITransactionalEventsProcessorBuilder 
+We have specifically added methods for event handlers registeration. 
+We have to register event handlers from multiple services we have provide single place that helps in registering event handlers. 
+Learning We can provide methods that register services to service collection. here we have two options. 
+Here we are adding table to maintain Idempotency of operations.
 
-Here we are adding table to maintain Idempotency of operations. 
+We provide service extention where we define services. if our services is in Infrastructure building block then we provide extention in that if it is in Microservice layer then we do that in particular service. 
+
+ServicesExtensions we provide methods for adding transactional event context as ITransactionalEventContext and ITransactionalEventEmitter 
+
+TransactionalEventsContextConfigurator Provide service collection object. we use it in  adding transaction context. 
+we are macking machinism that allow us to add transaction context in service collection. 
 
 We have place Idempotent operatioon in infrastructure and TransactionalEvent in domain 
+
+On Higher level we have integration event that is wraped in Outbox message and outbox message is saved in TransactionalEvent. and we have group of transactional events. 
+
+TransactionalEventsContextExtensions Provide extention to add outbox message. 
+provide facility to add outbox message.
+We can use action delegate that takes object and return void. then we can use service collection to get service 
+Interlocked.CompareExchange to provide thread safity.  for type of integration event. 
+then we can create instanse from property type. using Activator Create Instance method. 
+and pass that object to delegate that we are getting. and then invoke that delegate. 
+we have different datasources and we have different Properties for Integration events. thats why we have use that.
+
+When we have different sources and there properties then we can use power of delegates and write code at one place.
+we are providing extention for Adding TransactionContext where we are allwing to add additional configuration throgh lambda expression. 
+
+ServicesExtensions 
+TransactionalEventsContextConfigurator
+Handling. 
+
+ITransactionalEventsHandler
+ITransactionalEventsProcessor
+TransactionalEventsProcessingService Its Microsoft Extentions Hosting Service. 
+
+ITransactionalEventsProcessor Gets Events from Db and 
+
+How We are constructing Solution of Problem. ?
 
 we have context and extention of modelbuilder for both transaction and Idempotent Operation. 
 
