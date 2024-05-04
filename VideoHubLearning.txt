@@ -170,6 +170,9 @@ ITransactionalEventsProcessor Gets Events from Db and
 
 How We are constructing Solution of Problem. ?
 
+
+
+
 we have context and extention of modelbuilder for both transaction and Idempotent Operation. 
 
 Entity Framework provide us flexibility to intercept sql command generated for particular operation. 
