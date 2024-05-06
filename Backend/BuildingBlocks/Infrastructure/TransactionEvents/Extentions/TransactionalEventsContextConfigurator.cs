@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Infrastructure.TransactionEvents.Extentions
+namespace Infrastructure.TransactionEvents.Extentions;
+
+public class TransactionalEventsContextConfigurator
 {
-    internal class TransactionalEventsContextConfigurator
+
+    public IServiceCollection Services { get; private set; }
+
+    public TransactionalEventsContextConfigurator(IServiceCollection services)
     {
+        Services = services;
     }
 }

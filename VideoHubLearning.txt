@@ -158,6 +158,9 @@ we have different datasources and we have different Properties for Integration e
 When we have different sources and there properties then we can use power of delegates and write code at one place.
 we are providing extention for Adding TransactionContext where we are allwing to add additional configuration throgh lambda expression. 
 
+TransactionalEventsContext:
+
+
 ServicesExtensions 
 TransactionalEventsContextConfigurator
 Handling. 

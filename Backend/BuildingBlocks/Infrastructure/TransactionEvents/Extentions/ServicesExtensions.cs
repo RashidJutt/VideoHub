@@ -1,21 +1,30 @@
-﻿using Infrastructure.TransactionEvents.Processing;
+﻿using Domian.TransactionalEvents.Contracts;
+using Infrastructure.TransactionEvents.Processing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Infrastructure.TransactionEvents.Extentions;
 
 public static class ServicesExtensions
 {
-    public static ITransactionalEventsProcessorBuilder AddTransactionalEventsProcessingService(this IServiceCollection services, Action<TransactionalEventsProcessorConfiguration>? options = null)
+    public static IServiceCollection AddTransactionalEventsContext<TContext>
+             (this IServiceCollection services, Action<TransactionalEventsContextConfigurator>? options = null)
+             where TContext : class, ITransactionalEventsContext, ITransactionalEventsCommitter
     {
-        services.AddHostedService<TransactionalEventsProcessingService>();
+        services.TryAddScoped<ITransactionalEventsContext, TContext>();
+
+        services.TryAddScoped<ITransactionalEventsCommitter>(sp => {
+            var committer = sp.GetRequiredService<ITransactionalEventsContext>() as ITransactionalEventsCommitter;
+            return committer!;
+        });
 
         if (options != null)
         {
-            services.Configure(options);
+            TransactionalEventsContextConfigurator configurator = new TransactionalEventsContextConfigurator(services);
+            options.Invoke(configurator);
         }
 
-        var builder = new TransactionalEventsProcessorBuilder(services);
-        return builder;
+        return services;
     }
 }
 
