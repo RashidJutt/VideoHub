@@ -23,3 +23,5 @@ Backend/Services/VideoManager/VideoManager.Infrastructure/bin/*
 Backend/Services/VideoManager/VideoManager.Infrastructure/obj/*
 Backend/Services/VideoManager/VideoManager.SignalRHub/bin/*
 Backend/Services/VideoManager/VideoManager.SignalRHub/obj/*
+Backend/BuildingBlocks/EventBuss.Helper/bin/*
+Backend/BuildingBlocks/EventBuss.RabbitMQ/bin/*

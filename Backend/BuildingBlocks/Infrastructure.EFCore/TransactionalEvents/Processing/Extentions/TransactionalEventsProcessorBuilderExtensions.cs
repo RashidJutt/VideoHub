@@ -1,5 +1,7 @@
 ﻿using Infrastructure.TransactionEvents.Processing;
+using Infrastructure.TransactionEvents.Processing.Extentions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Infrastructure.EFCore.TransactionalEvents.Processing.Extentions;
 
