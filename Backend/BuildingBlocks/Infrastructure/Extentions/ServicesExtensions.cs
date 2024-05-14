@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Domian.Contracts;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Infrastructure.Extentions
+namespace Infrastructure.Extentions;
+
+public static class ServicesExtensions
 {
-    internal class ServicesExtensions
+    public static IServiceCollection AddUnitOfWork<T>(this IServiceCollection services)
+        where T : class, IUnitOfWork
     {
+        services.TryAddScoped<IUnitOfWork, T>();
+        return services;
     }
 }
