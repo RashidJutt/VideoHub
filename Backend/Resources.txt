@@ -1,0 +1,34 @@
+https://code-maze.com/graphql-aspnetcore-basics/
+
+Read After completing course and project.
+System Design Course | Samir Paul (plsmr1.github.io)
+https://plsmr1.github.io/posts/system-design-course/
+https://www.youtube.com/@Confluent
+https://www.youtube.com/watch?v=5YLpjPmsPCA
+https://jobs.hackernoon.com/?source=navbar
+
+https://github.com/josephnhtam/vsp-youtube-clone-microservices
+
+https://www.figstack.com/
+
+
+Aurora Production
+Calrom Web: https://aurora.aviateworld.com
+Aviate Web: https://aurora.aviateworld.com
+Virgin Web: https://aurora.vaflightstore.com
+Lime Web: https://aurora.lime-management.com
+Aviate Marketing:
+Virgin Marketing:
+Lime Marketing:
+Web Status: https://stats.uptimerobot.com/1vGGDC6Yow
+Web Health: https://health.travelinnovationgroup.com
+Jobs Dashboard: https://jobs.travelinnovationgroup.com
+Api Docs: https://docs.travelinnovationgroup.com
+API Gateway: https://apigw.travelinnovationgroup.com
+TIG API Gateway:
+Fake API Gateway: https://fakeapi.travelinnovationgroup.com
+Identity: https://identity.travelinnovationgroup.com/
+FortyTwo: https://42live.travelinnovationgroup.com/
+V7 Aviate: https://book.aviateworld.com/
+V7 Libe: https://Lime-management.com/
+V7 Virgin: https://Vaflightstore.com/

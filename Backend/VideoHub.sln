@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{6D1D043A-41D7-4AA3-AF96-5E736BE4CA81}"
+	ProjectSection(SolutionItems) = preProject
+		Resources.txt = Resources.txt
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domian", "BuildingBlocks\Domian\Domian.csproj", "{0BFF2105-F85D-43AB-B665-74FCC068B399}"
 EndProject
@@ -33,9 +36,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Storage.Shared", "Services\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedKernel", "BuildingBlocks\SharedKernel\SharedKernel.csproj", "{A123E3B4-035C-4600-AB1D-0F0D37AF8BEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBuss.Helper", "BuildingBlocks\EventBuss.Helper\EventBuss.Helper.csproj", "{2CD1F99B-DB68-4EF7-A397-2A2BE7F89AA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBuss.Helper", "BuildingBlocks\EventBuss.Helper\EventBuss.Helper.csproj", "{2CD1F99B-DB68-4EF7-A397-2A2BE7F89AA4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBuss.RabbitMQ", "BuildingBlocks\EventBuss.RabbitMQ\EventBuss.RabbitMQ.csproj", "{094F5CC5-1284-4E15-889B-397BA51ED09F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBuss.RabbitMQ", "BuildingBlocks\EventBuss.RabbitMQ\EventBuss.RabbitMQ.csproj", "{094F5CC5-1284-4E15-889B-397BA51ED09F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
